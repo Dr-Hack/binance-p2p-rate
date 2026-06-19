@@ -59,7 +59,7 @@ def build_embed(buy_ads, sell_ads):
             price = ad['adv']['price']
             name = ad['advertiser']['nickName']
             verified = "✅" if ad['advertiser'].get("userGrade") == 1 else ""
-            result += f"**{name}** {verified} - 💰 `{price} PKR`\n"
+            result += f"**{name}** {verified}\n💰 `{price} PKR`\n\n"
         return result
 
     now = datetime.now().strftime("%d %b %Y • %I:%M %p")
