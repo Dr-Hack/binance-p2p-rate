@@ -28,7 +28,7 @@ All wrapped in a clean Discord embed. Updated every time you call it.
 | Command | Description |
 |---------|-------------|
 | `!rates` | Fetch live USDT/PKR P2P rates from Binance |
-| `!fee` | *(coming soon)* Calculate P2P transaction fee |
+| `!fee` | Calculate P2P transaction fee — live via [CryptoAwaz DVA Bot](https://github.com/Dr-Hack/CryptoAwaz-DVA-BOT) |
 
 ---
 
