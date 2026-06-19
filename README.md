@@ -16,6 +16,7 @@ No more switching tabs to check crypto rates. Type one command in Discord and in
 - 🟢 **Top Buy offers** — who's selling USDT cheapest
 - 🔴 **Top Sell offers** — who's buying USDT at the highest rate
 - 📊 **Average prices + spread** — so you know the market at a glance
+- 🔺🔻 **Trend arrows** — shows how much the rate moved since your last check
 - ✅ **Verified merchant badges** — only trusted Binance merchants shown
 - 🔗 **Quick links** to [Crypto Awaz](https://cryptoawaz.com) and the [FAQ](https://cryptocurrencypakistan.org)
 
@@ -29,6 +30,24 @@ All wrapped in a clean Discord embed. Updated every time you call it.
 |---------|-------------|
 | `!rates` | Fetch live USDT/PKR P2P rates from Binance |
 | `/fee` | Calculate true rate with DVA Fee — live via [CryptoAwaz DVA Bot](https://github.com/Dr-Hack/CryptoAwaz-DVA-BOT) |
+
+---
+
+## 📊 Embed Features
+
+**Trend Arrows** — every `!rates` call compares the current avg price against the previous one and displays the movement inline:
+
+```
+🟢 Avg Buy:  286.15 PKR  🔺 +0.20
+🔴 Avg Sell: 286.11 PKR  🔻 -0.10
+```
+
+- `🔺 +X.XX` — rate went up since last check
+- `🔻 -X.XX` — rate dropped since last check
+- `➡️` — no change
+- No arrow on the first call — nothing to compare against yet
+
+**Spread Color** — embed turns 🔴 red when the spread goes negative (sell price drops below buy price), green otherwise.
 
 ---
 
@@ -87,6 +106,8 @@ Bot calls Binance P2P API (merchant ads only, PKR/USDT)
 Filters out promotional/privileged listings
         ↓
 Calculates avg buy price, avg sell price, spread
+        ↓
+Compares against last known rates → shows trend arrows
         ↓
 Sends a formatted Discord embed with top 5 offers each side
 ```
