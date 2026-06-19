@@ -75,7 +75,7 @@ def build_embed(buy_ads, sell_ads):
         value="[Crypto Awaz](https://cryptoawaz.com) • [FAQ](https://cryptocurrencypakistan.org) • Type `!fee` to calculate fee",
         inline=False
     )
-embed.timestamp = datetime.now(timezone.utc)
+    embed.timestamp = datetime.now(timezone.utc)
     return embed
 
 # 👇 Command users will call: !rates
