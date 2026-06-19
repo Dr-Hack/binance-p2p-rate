@@ -72,7 +72,7 @@ def build_embed(buy_ads, sell_ads):
     embed.add_field(name="🔴 Top Sell Offers", value=format_ads(sell_ads, "SELL"), inline=True)
     embed.add_field(
         name="​",
-        value="[Crypto Awaz](https://cryptoawaz.com) • [FAQ](https://cryptocurrencypakistan.org) • Type `/fee` to calculate fee",
+        value="🌐 [Crypto Awaz](https://cryptoawaz.com) • 📖 [FAQ](https://cryptocurrencypakistan.org) • Type `/fee` to calculate fee",
         inline=False
     )
     embed.timestamp = datetime.now(timezone.utc)
