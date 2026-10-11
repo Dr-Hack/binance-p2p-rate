@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncio
 import requests
 from datetime import datetime, timezone
 from dotenv import load_dotenv
@@ -9,8 +10,12 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.default()
-intents.message_content = True
-bot = commands.Bot(command_prefix="!", intents=intents)
+
+class RatesBot(commands.Bot):
+    async def setup_hook(self):
+        await self.tree.sync()
+
+bot = RatesBot(command_prefix=commands.when_mentioned, intents=intents)
 
 last_rates = {"buy": None, "sell": None}
 
@@ -94,20 +99,29 @@ def build_embed(buy_ads, sell_ads):
     embed.timestamp = datetime.now(timezone.utc)
     return embed
 
-@bot.command(name='rates')
-async def rates_command(ctx):
+async def send_rates(interaction: discord.Interaction):
+    await interaction.response.defer()
     try:
-        buy_ads = fetch_ads("BUY")
-        sell_ads = fetch_ads("SELL")
+        loop = asyncio.get_running_loop()
+        buy_ads = await loop.run_in_executor(None, fetch_ads, "BUY")
+        sell_ads = await loop.run_in_executor(None, fetch_ads, "SELL")
         embed = build_embed(buy_ads, sell_ads)
-        await ctx.send(embed=embed)
+        await interaction.followup.send(embed=embed)
 
         buy_prices = [float(ad['adv']['price']) for ad in buy_ads[:3]]
         sell_prices = [float(ad['adv']['price']) for ad in sell_ads[:3]]
         last_rates["buy"] = sum(buy_prices) / len(buy_prices) if buy_prices else None
         last_rates["sell"] = sum(sell_prices) / len(sell_prices) if sell_prices else None
     except Exception as e:
-        await ctx.send(f"❌ Error fetching rates:\n```{str(e)}```")
+        await interaction.followup.send(f"❌ Error fetching rates:\n```{str(e)}```")
+
+@bot.tree.command(name="rates", description="Live Binance P2P USDT/PKR rates")
+async def rates_command(interaction: discord.Interaction):
+    await send_rates(interaction)
+
+@bot.tree.command(name="rate", description="Live Binance P2P USDT/PKR rates")
+async def rate_command(interaction: discord.Interaction):
+    await send_rates(interaction)
 
 @bot.event
 async def on_ready():

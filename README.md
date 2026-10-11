@@ -28,14 +28,14 @@ All wrapped in a clean Discord embed. Updated every time you call it.
 
 | Command | Description |
 |---------|-------------|
-| `!rates` | Fetch live USDT/PKR P2P rates from Binance |
+| `/rates` or `/rate` | Fetch live USDT/PKR P2P rates from Binance |
 | `/fee` | Calculate true rate with DVA Fee — live via [CryptoAwaz DVA Bot](https://github.com/Dr-Hack/CryptoAwaz-DVA-BOT) |
 
 ---
 
 ## 📊 Embed Features
 
-**Trend Arrows** — every `!rates` call compares the current avg price against the previous one and displays the movement inline:
+**Trend Arrows** — every `/rates` call compares the current avg price against the previous one and displays the movement inline:
 
 ```
 🟢 Avg Buy:  286.15 PKR  🔺 +0.20
@@ -99,7 +99,7 @@ You should see:
 ## 🛡️ How It Works
 
 ```
-User types !rates
+User types /rates (or /rate)
         ↓
 Bot calls Binance P2P API (merchant ads only, PKR/USDT)
         ↓
@@ -120,7 +120,8 @@ The bot queries the Binance P2P endpoint directly — no third-party data, no de
 
 - Python 3.8+
 - A Discord bot token ([guide](https://discord.com/developers/applications))
-- Bot invited to your server with `Send Messages` + `Embed Links` permissions
+- Bot invited with the `bot` + `applications.commands` scopes and `View Channels`, `Send Messages`, `Embed Links` permissions
+- No privileged intents needed (Message Content is **not** required)
 
 ```
 discord.py
